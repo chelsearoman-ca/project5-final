@@ -44,9 +44,9 @@ class Heading extends React.Component{
       }).then((res) => {
         const posting = res.data
         this.setPosting(posting)
-        console.log(posting)
+       
       }).catch((err)=>{
-        console.error(err)
+       
       })
   }
 
@@ -80,7 +80,7 @@ class Heading extends React.Component{
         <ul className="data">
           {/* here we are mapping through our state obj to rend an array of components */}
           {this.state.posting.map((company, index)=>{ //map gives us back a new array
-            return <Job key={company.id} data={company}/> //map through the state and for every person return the Staff component
+            return <Job key={company.id} data={company}/> //map through the state and for every person return the Job Component
           })}
         </ul>
       </main>
