@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+
 class App extends React.Component {
   render() {
     return (
@@ -28,17 +29,17 @@ class Heading extends React.Component{
   }
 
   getJobs (query) {
-    console.log(query)
-    let startingSearch =''
+    let startingSearch ='';
     if(query){
-      startingSearch = '?search='+ query
-    }
+      startingSearch = '?search='+ query;
+      } 
     axios({
       method:'GET',
       url: 'http://proxy.hackeryou.com',
       dataResponse:'json',
       params: {
-        reqUrl: `${this.state.apiURL}${startingSearch}` //you open the app 
+        reqUrl: `${this.state.apiURL}${startingSearch}`,
+        full_time: true //you open the app 
       }
       }).then((res) => {
         const posting = res.data
@@ -49,10 +50,10 @@ class Heading extends React.Component{
       })
   }
 
+  
   setPosting(posting){
     this.setState({posting})
   }
-
   updateSearchValue(e){
     const currentSearchValue = e.target.value 
     this.setState({searchValue: currentSearchValue})// this is the value of the change event that happens in the input and storing or constantly updating our state with it
@@ -69,17 +70,20 @@ class Heading extends React.Component{
   }
   render(){ //called any time state changes and any time the page loads
     return (
-      <div>
-        <h1>Page</h1>
-        <input type="text" value={this.state.searchValue} onChange={(e)=>{this.updateSearchValue(e)}}/> {/*functions live outside of your state*/}
-        <button onClick={()=>{this.searchSubmit()}}>Search</button>
-        <ul>
+      <main>
+        <div className ="top">
+            <h1>Dev Jobs</h1>
+            <input placeholder="Ruby, Python, etc"type="text" value={this.state.searchValue} onChange={(e)=>{this.updateSearchValue(e)}}/> {/*functions live outside of your state*/}
+            <button id="button" onClick={()=>{this.searchSubmit()}}>Search</button>
+            <p>Made with the Github Jobs API</p>
+        </div>
+        <ul className="data">
           {/* here we are mapping through our state obj to rend an array of components */}
           {this.state.posting.map((company, index)=>{ //map gives us back a new array
             return <Job key={company.id} data={company}/> //map through the state and for every person return the Staff component
           })}
         </ul>
-      </div>
+      </main>
     )
   }
 }
@@ -87,14 +91,13 @@ class Heading extends React.Component{
 const Job = (props)=>{
   // console.log(props.data)
   return (
-      <ul>
-        <li>
+      <ul className ="jobItem">
+        <li className="jobTitle">
           {props.data.title}
-          {/* <img src={props.data.company_logo} alt={`Company logo for ${props.data.company}`}/> need this to be WAY smaller, some don't have one */}
-          <ul>
-            <li>{props.data.company}</li>
+          <ul className="companyInfo">
+            <li className="companyName">{props.data.company}</li>
             <p> 
-              <a href ={`${props.data.url}`} target="_blank">link</a>
+              <a href ={`${props.data.url}`} target="_blank">See Full Posting</a>
             </p>
           </ul>
         </li>
@@ -110,7 +113,7 @@ ReactDOM.render(<App />, document.getElementById('app'));
 // 1. Make a call to Github Job API to retrieve a list of REMOTE job positions
 // 2. Display jobs
 // 3. Ability to narrow by position
-// 4. Smooth scrolling
+
 
 // Stretch
 // 5. Allow users to save jobs for later in a to do list on side 
