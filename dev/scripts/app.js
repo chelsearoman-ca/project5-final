@@ -35,7 +35,7 @@ class Heading extends React.Component{
       } 
     axios({
       method:'GET',
-      url: 'http://proxy.hackeryou.com',
+      url: 'https://proxy.hackeryou.com',
       dataResponse:'json',
       params: {
         reqUrl: `${this.state.apiURL}${startingSearch}`,
